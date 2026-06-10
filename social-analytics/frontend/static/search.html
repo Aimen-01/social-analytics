@@ -1,0 +1,397 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Search — SocialMetrics Pro</title>
+  <link rel="stylesheet" href="styles.css" />
+  <style>
+    .search-hero {
+      background: linear-gradient(135deg, rgba(108,99,255,0.08), rgba(0,208,132,0.04));
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 28px 24px;
+      margin-bottom: 20px;
+    }
+    .search-hero h2 {
+      font-size: 1.15rem;
+      font-weight: 700;
+      margin-bottom: 6px;
+    }
+    .search-hero p { font-size: 0.84rem; color: var(--muted); margin-bottom: 18px; }
+    .search-hero .search-inp { font-size: 1rem; padding: 13px 16px 13px 46px; border-radius: 12px; }
+    .search-hero .search-wrap svg { width: 18px; height: 18px; left: 14px; }
+
+    .sort-label { font-size: 0.78rem; color: var(--muted); font-weight: 600; }
+    .sort-dir-btn {
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: 7px;
+      color: var(--muted);
+      cursor: pointer;
+      padding: 6px 10px;
+      font-size: 0.8rem;
+      font-family: inherit;
+      font-weight: 600;
+      transition: all 0.15s;
+      display: flex; align-items: center;
+      gap: 5px;
+    }
+    .sort-dir-btn:hover { border-color: var(--accent); color: var(--accent); }
+    .sort-dir-btn.asc::after  { content: ' ↑'; }
+    .sort-dir-btn.desc::after { content: ' ↓'; }
+
+    .chip-bar { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 16px; }
+    .chip {
+      display: inline-flex; align-items: center; gap: 5px;
+      background: rgba(108,99,255,0.12); border: 1px solid rgba(108,99,255,0.22);
+      color: var(--accent); border-radius: 99px; padding: 3px 10px 3px 12px;
+      font-size: 0.76rem; font-weight: 600; cursor: pointer; transition: background 0.15s;
+    }
+    .chip:hover { background: rgba(108,99,255,0.22); }
+    .chip .chip-x { opacity: 0.7; font-size: 0.9rem; }
+
+    .stat-row { display: flex; flex-wrap: wrap; gap: 12px; margin-bottom: 18px; }
+    .mini-stat { background: var(--card); border: 1px solid var(--border); border-radius: 10px; padding: 12px 18px; flex: 1; min-width: 100px; }
+    .mini-stat-val { font-size: 1.2rem; font-weight: 700; }
+    .mini-stat-lbl { font-size: 0.72rem; color: var(--muted); }
+    .highlight { background: rgba(108,99,255,0.25); border-radius: 3px; color: var(--text); padding: 0 2px; }
+    
+    /* Loading overlay inside table area */
+    .loading-row { text-align: center; color: var(--muted); padding: 30px; font-weight: 500; }
+  </style>
+</head>
+<body>
+
+<div class="overlay" id="overlay"></div>
+
+<aside class="sidebar" id="sidebar">
+  <div class="sidebar-brand">
+    <div class="brand-icon">
+      <svg viewBox="0 0 24 24"><path d="M3 3h7v7H3V3zm0 11h7v7H3v-7zm11-11h7v7h-7V3zm0 11h7v7h-7v-7z"/></svg>
+    </div>
+    <div class="brand-name">Social<span>Metrics</span></div>
+  </div>
+  <nav class="nav-wrap">
+    <div class="nav-label">Main</div>
+    <a href="dashboard.html" class="nav-link">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>
+      Dashboard
+    </a>
+    <a href="posts.html" class="nav-link">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
+      Posts
+    </a>
+    <a href="search.html" class="nav-link active">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+      Search
+    </a>
+    <a href="reports.html" class="nav-link">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>
+      Reports
+    </a>
+  </nav>
+</aside>
+
+<header class="navbar">
+  <div class="nav-l">
+    <button class="hamburger" id="hamburger" aria-label="Toggle sidebar">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+    </button>
+    <span class="page-title">Search & Filter</span>
+  </div>
+  <div class="nav-r">
+    <span class="date-chip" id="navDate">Live Monitoring</span>
+  </div>
+</header>
+
+<main class="main">
+  <div class="pg-hd anim">
+    <h1>Search &amp; Filter</h1>
+    <p>Find posts by content, platform, type, hashtag, or performance metric from live cluster</p>
+  </div>
+
+  <div class="search-hero anim-1">
+    <h2>Find any post instantly</h2>
+    <p>Search across content text, hashtags, and platforms</p>
+    <div class="search-wrap">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+      <input type="search" class="search-inp" id="mainSearch" placeholder="Search posts, hashtags, keywords…" autofocus />
+    </div>
+  </div>
+
+  <div class="filter-bar anim-2">
+    <span class="sort-label">Filter:</span>
+    <select id="fltPlatform">
+      <option value="">All Platforms</option>
+      <option value="Twitter/X">Twitter/X</option>
+      <option value="Instagram">Instagram</option>
+      <option value="Facebook">Facebook</option>
+      <option value="YouTube">YouTube</option>
+    </select>
+    <select id="fltType">
+      <option value="">All Types</option>
+      <option value="text">Text</option>
+      <option value="image">Image</option>
+      <option value="video">Video</option>
+      <option value="reel">Reel</option>
+    </select>
+    
+    <div class="filter-spacer"></div>
+
+    <span class="sort-label">Sort by:</span>
+    <select id="sortBy">
+      <option value="created_at">Date</option>
+      <option value="metrics.likes">Likes</option>
+      <option value="metrics.replies">Replies</option>
+      <option value="metrics.retweets">Retweets</option>
+      <option value="metrics.views">Views</option>
+    </select>
+    <button class="sort-dir-btn desc" id="sortDirBtn" title="Toggle sort direction">Desc</button>
+    
+    <button class="btn btn-ghost btn-sm" id="clearFilters">
+      <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+      Clear
+    </button>
+  </div>
+
+  <div class="chip-bar" id="chipBar"></div>
+
+  <div class="stat-row">
+    <div class="mini-stat">
+      <div class="mini-stat-val" id="statMatches">0</div>
+      <div class="mini-stat-lbl">Matched Posts</div>
+    </div>
+    <div class="mini-stat">
+      <div class="mini-stat-val" id="statLikes">0</div>
+      <div class="mini-stat-lbl">Accumulated Likes</div>
+    </div>
+    <div class="mini-stat">
+      <div class="mini-stat-val" id="statViews">0</div>
+      <div class="mini-stat-lbl">Total Views</div>
+    </div>
+  </div>
+
+  <div class="card anim-3">
+    <div class="tbl-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th style="white-space:nowrap">Date</th>
+            <th>Platform</th>
+            <th>Content Excerpt</th>
+            <th>Type</th>
+            <th>Hashtags</th>
+            <th style="text-align:right">Likes</th>
+            <th style="text-align:right">Replies</th>
+            <th style="text-align:right">Retweets</th>
+            <th style="text-align:right">Views</th>
+          </tr>
+        </thead>
+        <tbody id="postsTbody">
+          <tr><td colspan="9" class="loading-row">Loading records from MongoDB backend...</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</main>
+
+<script src="../api.js"></script>
+<script>
+  // UI Element binds
+  const mainSearch = document.getElementById('mainSearch');
+  const fltPlatform = document.getElementById('fltPlatform');
+  const fltType = document.getElementById('fltType');
+  const sortBy = document.getElementById('sortBy');
+  const sortDirBtn = document.getElementById('sortDirBtn');
+  const clearFilters = document.getElementById('clearFilters');
+  const chipBar = document.getElementById('chipBar');
+  const postsTbody = document.getElementById('postsTbody');
+
+  const statMatches = document.getElementById('statMatches');
+  const statLikes = document.getElementById('statLikes');
+  const statViews = document.getElementById('statViews');
+
+  // Search State variables
+  let currentSortDir = 'desc';
+  let debounceTimer;
+
+  // Initialize event bindings
+  window.addEventListener('DOMContentLoaded', () => {
+    // Setup Sidebar logic toggle
+    const hamburger = document.getElementById('hamburger');
+    const sidebar = document.getElementById('sidebar');
+    const overlay = document.getElementById('overlay');
+    if(hamburger) {
+      hamburger.addEventListener('click', () => {
+        sidebar.classList.toggle('active');
+        overlay.classList.toggle('active');
+      });
+    }
+    if(overlay) {
+      overlay.addEventListener('click', () => {
+        sidebar.classList.remove('active');
+        overlay.classList.remove('active');
+      });
+    }
+
+    // Input listeners
+    mainSearch.addEventListener('input', () => {
+      clearTimeout(debounceTimer);
+      debounceTimer = setTimeout(fetchLiveResults, 350); // Debounce typing requests
+    });
+    fltPlatform.addEventListener('change', fetchLiveResults);
+    fltType.addEventListener('change', fetchLiveResults);
+    sortBy.addEventListener('change', fetchLiveResults);
+
+    sortDirBtn.addEventListener('click', () => {
+      currentSortDir = currentSortDir === 'desc' ? 'asc' : 'desc';
+      sortDirBtn.className = `sort-dir-btn ${currentSortDir}`;
+      sortDirBtn.textContent = currentSortDir.toUpperCase();
+      fetchLiveResults();
+    });
+
+    clearFilters.addEventListener('click', () => {
+      mainSearch.value = '';
+      fltPlatform.value = '';
+      fltType.value = '';
+      sortBy.value = 'created_at';
+      currentSortDir = 'desc';
+      sortDirBtn.className = 'sort-dir-btn desc';
+      sortDirBtn.textContent = 'DESC';
+      fetchLiveResults();
+    });
+
+    // Initial Data Fetch
+    fetchLiveResults();
+  });
+
+  // Query Backend Server
+  async function fetchLiveResults() {
+    postsTbody.innerHTML = '<tr><td colspan="9" class="loading-row">Searching live database cluster...</td></tr>';
+    
+    // Construct dynamic endpoint parameter mapping
+    const params = new URLSearchParams();
+    if (mainSearch.value.trim()) params.append('q', mainSearch.value.trim());
+    if (fltPlatform.value) params.append('platform', fltPlatform.value);
+    if (fltType.value) params.append('post_type', fltType.value);
+    
+    params.append('sort', sortBy.value);
+    params.append('direction', currentSortDir);
+    params.append('limit', '50'); // Keep rendering limits high but bounded
+
+    try {
+      const response = await fetch(`http://localhost:5000/api/search?${params.toString()}`);
+      if (!response.ok) throw new Error('API server failed transaction');
+      const posts = await response.json();
+      
+      renderTableContent(posts);
+      updateTopChips();
+    } catch (error) {
+      console.error(error);
+      postsTbody.innerHTML = `<tr><td colspan="9" class="loading-row" style="color:var(--red);">Failed to parse backend post documents. Ensure API server is active.</td></tr>`;
+    }
+  }
+
+  // Update visual Filter Chips at top
+  function updateTopChips() {
+    chipBar.innerHTML = '';
+    const items = [
+      { element: mainSearch, prefix: 'Query: ' },
+      { element: fltPlatform, prefix: '' },
+      { element: fltType, prefix: 'Format: ' }
+    ];
+    
+    items.forEach(item => {
+      if (item.element.value) {
+        const span = document.createElement('span');
+        span.className = 'chip';
+        span.innerHTML = `${item.prefix}${item.element.value} <span class="chip-x">×</span>`;
+        
+        span.onclick = () => {
+          // If it's a dropdown menu selector, reset it to the first option ("All")
+          if (item.element.tagName === 'SELECT') {
+            item.element.selectedIndex = 0;
+          } else {
+            item.element.value = '';
+          }
+          fetchLiveResults();
+        };
+        
+        chipBar.appendChild(span);
+      }
+    });
+  }
+
+  // Process data models and push inside DOM
+  function renderTableContent(posts) {
+    postsTbody.innerHTML = '';
+    if (posts.length === 0) {
+      postsTbody.innerHTML = '<tr><td colspan="9" class="loading-row">No posts found matching parameters.</td></tr>';
+      statMatches.textContent = '0';
+      statLikes.textContent = '0';
+      statViews.textContent = '0';
+      return;
+    }
+
+    let aggregatedLikes = 0;
+    let aggregatedViews = 0;
+
+    posts.forEach(post => {
+      const m = post.metrics || { likes: 0, replies: 0, retweets: 0, views: 0 };
+      aggregatedLikes += m.likes;
+      aggregatedViews += m.views;
+
+      const postDate = new Date(post.created_at).toLocaleDateString(undefined, {month: 'short', day: 'numeric', year: '2-digit'});
+      const platformBadge = `<span class="plt-badge" style="background:${getPlatformColor(post.platform)}">${post.platform || 'System'}</span>`;
+      const typeBadge = `<span class="typ-badge">${post.post_type || 'Text'}</span>`;
+      
+      // Map tags
+      const tagsMarkup = (post.hashtags || []).map(t => `<span class="tag">#${t}</span>`).join(' ');
+
+      const row = document.createElement('tr');
+      row.innerHTML = `
+        <td style="white-space:nowrap;color:var(--muted);font-size:0.79rem">${postDate}</td>
+        <td>${platformBadge}</td>
+        <td style="max-width:300px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;" title="${escapeHtml(post.text)}">
+          ${highlightKeyword(post.text, mainSearch.value)}
+        </td>
+        <td>${typeBadge}</td>
+        <td style="max-width:180px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;">${tagsMarkup}</td>
+        <td style="text-align:right"><strong>${m.likes.toLocaleString()}</strong></td>
+        <td style="text-align:right">${m.replies.toLocaleString()}</td>
+        <td style="text-align:right">${m.retweets.toLocaleString()}</td>
+        <td style="text-align:right;color:var(--muted)">${m.views.toLocaleString()}</td>
+      `;
+      postsTbody.appendChild(row);
+    });
+
+    // Update statistical counters
+    statMatches.textContent = posts.length.toLocaleString();
+    statLikes.textContent = aggregatedLikes.toLocaleString();
+    statViews.textContent = aggregatedViews >= 1000000 ? (aggregatedViews/1000000).toFixed(1) + 'M' : aggregatedViews.toLocaleString();
+  }
+
+  // Visual text highlight helper
+  function highlightKeyword(text, searchWord) {
+    if (!searchWord || !searchWord.trim()) return escapeHtml(text);
+    const cleanWord = searchWord.trim().replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&');
+    const regex = new RegExp(`(${cleanWord})`, 'gi');
+    return escapeHtml(text).replace(regex, `<span class="highlight">$1</span>`);
+  }
+
+  function getPlatformColor(p) {
+    if(!p) return '#6C63FF';
+    if(p.toLowerCase().includes('face')) return '#1877F2';
+    if(p.toLowerCase().includes('insta')) return '#E1306C';
+    if(p.toLowerCase().includes('twit') || p.toLowerCase().includes('x')) return '#1DA1F2';
+    if(p.toLowerCase().includes('you')) return '#FF3E3E';
+    return '#6C63FF';
+  }
+
+  function escapeHtml(str) {
+    return String(str).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+  }
+</script>
+</body>
+</html>

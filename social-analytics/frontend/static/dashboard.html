@@ -1,0 +1,469 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Dashboard — SocialMetrics Pro</title>
+  <link rel="stylesheet" href="styles.css" />
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+</head>
+<body>
+
+<!-- Mobile overlay -->
+<div class="overlay" id="overlay"></div>
+
+<!-- ═══ SIDEBAR ═══════════════════════════════════════════════════ -->
+<aside class="sidebar" id="sidebar">
+  <div class="sidebar-brand">
+    <div class="brand-icon">
+      <svg viewBox="0 0 24 24"><path d="M3 3h7v7H3V3zm0 11h7v7H3v-7zm11-11h7v7h-7V3zm0 11h7v7h-7v-7z"/></svg>
+    </div>
+    <div class="brand-name">Social<span>Metrics</span></div>
+  </div>
+
+  <nav class="nav-wrap">
+    <div class="nav-label">Main</div>
+    <a href="dashboard.html" class="nav-link active">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>
+      Dashboard
+    </a>
+    <a href="posts.html" class="nav-link">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
+      Posts
+    </a>
+    <a href="search.html" class="nav-link">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+      Search
+    </a>
+    <a href="reports.html" class="nav-link">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>
+      Reports
+    </a>
+
+  </nav>
+
+
+</aside>
+
+<!-- ═══ NAVBAR ════════════════════════════════════════════════════ -->
+<header class="navbar">
+  <div class="nav-l">
+    <button class="hamburger" id="hamburger" aria-label="Toggle sidebar">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+    </button>
+    <span class="page-title">Dashboard Overview</span>
+  </div>
+  <div class="nav-r">
+    <span class="date-chip">Mon, May 12 2026</span>
+  </div>
+</header>
+
+<!-- ═══ MAIN CONTENT ══════════════════════════════════════════════ -->
+<main class="main">
+
+  <div class="pg-hd anim">
+    <h1>Analytics Overview</h1>
+    <p>Track your social media performance across all platforms in real time</p>
+  </div>
+
+  <!-- ── Stat Cards ───────────────────────────────────────────── -->
+  <div class="stats-grid anim-1">
+    <div class="stat-card sc-purple">
+      <div class="stat-ico ico-purple">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+      </div>
+      <div class="stat-val">284K</div>
+      <div class="stat-lbl">Total Followers</div>
+      <span class="stat-delta d-up">▲ 12.5% vs last month</span>
+    </div>
+
+    <div class="stat-card sc-blue">
+      <div class="stat-ico ico-blue">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
+      </div>
+      <div class="stat-val">1,247</div>
+      <div class="stat-lbl">Total Posts</div>
+      <span class="stat-delta d-up">▲ 8.3% vs last month</span>
+    </div>
+
+    <div class="stat-card sc-green">
+      <div class="stat-ico ico-green">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+      </div>
+      <div class="stat-val">6.2%</div>
+      <div class="stat-lbl">Avg Engagement Rate</div>
+      <span class="stat-delta d-up">▲ 0.8% vs last month</span>
+    </div>
+
+    <div class="stat-card sc-orange">
+      <div class="stat-ico ico-orange">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="3"/><line x1="12" y1="2" x2="12" y2="5"/><line x1="12" y1="19" x2="12" y2="22"/><line x1="2" y1="12" x2="5" y2="12"/><line x1="19" y1="12" x2="22" y2="12"/></svg>
+      </div>
+      <div class="stat-val">1.9M</div>
+      <div class="stat-lbl">Total Reach</div>
+      <span class="stat-delta d-up">▲ 22.1% vs last month</span>
+    </div>
+
+    <div class="stat-card sc-red">
+      <div class="stat-ico ico-red">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+      </div>
+      <div class="stat-val">118K</div>
+      <div class="stat-lbl">Total Likes</div>
+      <span class="stat-delta d-down">▼ 3.2% vs last month</span>
+    </div>
+  </div>
+
+  <!-- ── Row 1: Engagement Line + Post Types Donut ────────────── -->
+  <div class="g2-main anim-2">
+    <div class="card">
+      <div class="card-hd">
+        <div>
+          <div class="card-ttl">Engagement Over Time</div>
+          <div class="card-sub">Likes, comments &amp; shares — last 7 days</div>
+        </div>
+        <div class="leg">
+          <span class="leg-item"><span class="leg-dot" style="background:#6C63FF"></span>Likes</span>
+          <span class="leg-item"><span class="leg-dot" style="background:#00D084"></span>Comments</span>
+          <span class="leg-item"><span class="leg-dot" style="background:#FFB648"></span>Shares</span>
+        </div>
+      </div>
+      <div style="position:relative;height:256px;">
+        <canvas id="engChart"></canvas>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-hd">
+        <div>
+          <div class="card-ttl">Post Types</div>
+          <div class="card-sub">Content format distribution</div>
+        </div>
+      </div>
+      <div style="position:relative;height:256px;">
+        <canvas id="typesChart"></canvas>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── Row 2: Followers Bar + Sentiment ────────────────────── -->
+  <div class="g2-eq anim-3">
+    <div class="card">
+      <div class="card-hd">
+        <div>
+          <div class="card-ttl">Followers by Platform</div>
+          <div class="card-sub">Audience size per channel (thousands)</div>
+        </div>
+      </div>
+      <div style="position:relative;height:256px;">
+        <canvas id="fwChart"></canvas>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-hd">
+        <div>
+          <div class="card-ttl">Audience Sentiment</div>
+          <div class="card-sub">Comment tone analysis — all platforms</div>
+        </div>
+      </div>
+
+      <!-- Color bar -->
+      <div class="sent-bar">
+        <div class="s-pos"></div>
+        <div class="s-neu"></div>
+        <div class="s-neg"></div>
+      </div>
+      <div class="leg" style="margin-bottom:16px;">
+        <span class="leg-item"><span class="leg-dot" style="background:#00D084"></span>Positive 61%</span>
+        <span class="leg-item"><span class="leg-dot" style="background:#FFB648"></span>Neutral 27%</span>
+        <span class="leg-item"><span class="leg-dot" style="background:#FF4D6D"></span>Negative 12%</span>
+      </div>
+
+      <!-- Progress bars -->
+      <div class="sent-rows">
+        <div class="sent-row">
+          <span class="s-lbl">Positive</span>
+          <div class="prog"><div class="prog-fill" style="width:61%;background:var(--green)"></div></div>
+          <span class="s-pct">61%</span>
+        </div>
+        <div class="sent-row">
+          <span class="s-lbl">Neutral</span>
+          <div class="prog"><div class="prog-fill" style="width:27%;background:#FFB648"></div></div>
+          <span class="s-pct">27%</span>
+        </div>
+        <div class="sent-row">
+          <span class="s-lbl">Negative</span>
+          <div class="prog"><div class="prog-fill" style="width:12%;background:var(--red)"></div></div>
+          <span class="s-pct">12%</span>
+        </div>
+      </div>
+
+      <div class="divider"></div>
+      <div class="card-ttl" style="margin-bottom:12px;font-size:0.82rem;">Sentiment by Platform</div>
+      <div style="position:relative;height:148px;">
+        <canvas id="sentChart"></canvas>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── Top Performing Posts Table ───────────────────────────── -->
+  <div class="card">
+    <div class="card-hd">
+      <div>
+        <div class="card-ttl">Top Performing Posts</div>
+        <div class="card-sub">Highest engagement in the last 30 days</div>
+      </div>
+      <a href="posts.html" class="btn btn-primary btn-sm">View All Posts</a>
+    </div>
+    <div class="tbl-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Platform</th>
+            <th>Content</th>
+            <th>Type</th>
+            <th>Likes</th>
+            <th>Comments</th>
+            <th>Shares</th>
+            <th>Reach</th>
+          </tr>
+        </thead>
+        <tbody id="topPostsTbody"></tbody>
+      </table>
+    </div>
+  </div>
+
+</main>
+
+<script src="../api.js"></script>
+<script>
+initSidebar();
+
+let timelineChart = null;
+let typesChart    = null;
+let fwChart       = null;
+let sentChart     = null;
+
+async function boot() {
+  await Promise.all([
+    loadStats(),
+    loadTimeline(),
+    loadPostTypes(),
+    loadFollowersByPlatform(),
+    loadSentiment(),
+    loadTopPosts()
+  ]);
+}
+
+// ── Stat Cards ──────────────────────────────────────────────────
+async function loadStats() {
+  const d = await API.getGlobalStats();
+  if (!d) return;
+  // Update every stat-val in order: followers(skip), posts, engagement(skip), reach(skip), likes
+  const cards = document.querySelectorAll('.stat-val');
+  if (cards[1]) cards[1].textContent = fmtNum(d.total_posts);
+  if (cards[4]) cards[4].textContent = fmtNum(d.total_likes);
+}
+
+// ── Engagement Timeline ──────────────────────────────────────────
+async function loadTimeline(hashtag = '') {
+  const d = await API.getTimelineData('7d', hashtag);
+  if (!d?.data?.length) return;
+
+  const labels   = d.data.map(r => r.date.slice(5));
+  const likes    = d.data.map(r => r.avg_likes);
+  const retweets = d.data.map(r => r.avg_retweets);
+  const posts    = d.data.map(r => r.post_count);
+
+  if (timelineChart) timelineChart.destroy();
+  timelineChart = new Chart(document.getElementById('engChart'), {
+    type: 'line',
+    data: {
+      labels,
+      datasets: [
+        {
+          label: 'Likes',
+          data: likes,
+          borderColor: '#6C63FF',
+          backgroundColor: 'rgba(108,99,255,.1)',
+          fill: true, tension: 0.4, pointRadius: 3
+        },
+        {
+          label: 'Comments',
+          data: posts,
+          borderColor: '#00D084',
+          backgroundColor: 'rgba(0,208,132,.08)',
+          fill: true, tension: 0.4, pointRadius: 3
+        },
+        {
+          label: 'Shares',
+          data: retweets,
+          borderColor: '#FFB648',
+          backgroundColor: 'rgba(255,182,72,.08)',
+          fill: true, tension: 0.4, pointRadius: 3
+        }
+      ]
+    },
+    options: {
+      responsive: true,
+      maintainAspectRatio: false,
+      interaction: { mode: 'index', intersect: false },
+      plugins: { legend: { display: false } },
+      scales: {
+        x: { ticks: { color: '#7d8590', font:{size:11} }, grid: { color: 'rgba(255,255,255,.05)' } },
+        y: { ticks: { color: '#7d8590', font:{size:11} }, grid: { color: 'rgba(255,255,255,.05)' } }
+      }
+    }
+  });
+}
+
+// ── Post Types Donut ─────────────────────────────────────────────
+async function loadPostTypes() {
+  const d = await API.getGlobalStats();
+  // We'll use platform distribution for the donut since post types
+  // come from the same posts collection
+  const pd = await API.getPlatformDistribution();
+  if (!pd?.data?.length) return;
+
+  const labels = pd.data.map(r => r.platform);
+  const values = pd.data.map(r => r.post_count);
+  const colors = ['#6C63FF','#00D084','#FFB648','#FF4D6D'];
+
+  if (typesChart) typesChart.destroy();
+  typesChart = new Chart(document.getElementById('typesChart'), {
+    type: 'doughnut',
+    data: {
+      labels,
+      datasets: [{ data: values, backgroundColor: colors, borderWidth: 0 }]
+    },
+    options: {
+      responsive: true,
+      maintainAspectRatio: false,
+      plugins: {
+        legend: { position: 'bottom', labels: { color: '#7d8590', font:{size:11}, padding:12 } }
+      }
+    }
+  });
+}
+
+// ── Followers by Platform Bar ────────────────────────────────────
+async function loadFollowersByPlatform() {
+  const d = await API.getPlatformDistribution();
+  if (!d?.data?.length) return;
+
+  const labels = d.data.map(r => r.platform);
+  const values = d.data.map(r => Math.round(r.post_count / 100));
+
+  if (fwChart) fwChart.destroy();
+  fwChart = new Chart(document.getElementById('fwChart'), {
+    type: 'bar',
+    data: {
+      labels,
+      datasets: [{
+        label: 'Followers (K)',
+        data: values,
+        backgroundColor: ['#6C63FF','#00D084','#FFB648','#FF4D6D'],
+        borderRadius: 6
+      }]
+    },
+    options: {
+      responsive: true,
+      maintainAspectRatio: false,
+      plugins: { legend: { display: false } },
+      scales: {
+        x: { ticks: { color: '#7d8590' }, grid: { display: false } },
+        y: { ticks: { color: '#7d8590' }, grid: { color: 'rgba(255,255,255,.05)' } }
+      }
+    }
+  });
+}
+
+// ── Sentiment ────────────────────────────────────────────────────
+async function loadSentiment() {
+  const d = await API.getSentimentBreakdown();
+  if (!d?.data?.length) return;
+
+  const map = {};
+  d.data.forEach(r => map[r.label] = r.count);
+  const total = Object.values(map).reduce((a,b) => a+b, 0);
+  const pos = Math.round((map.positive||0)/total*100);
+  const neu = Math.round((map.neutral||0)/total*100);
+  const neg = 100 - pos - neu;
+
+  // Update color bar widths
+  const sPos = document.querySelector('.s-pos');
+  const sNeu = document.querySelector('.s-neu');
+  const sNeg = document.querySelector('.s-neg');
+  if (sPos) sPos.style.width = pos + '%';
+  if (sNeu) sNeu.style.width = neu + '%';
+  if (sNeg) sNeg.style.width = neg + '%';
+
+  // Update progress bars and percentages
+  const rows = document.querySelectorAll('.sent-row');
+  if (rows[0]) {
+    rows[0].querySelector('.prog-fill').style.width = pos + '%';
+    rows[0].querySelector('.s-pct').textContent = pos + '%';
+  }
+  if (rows[1]) {
+    rows[1].querySelector('.prog-fill').style.width = neu + '%';
+    rows[1].querySelector('.s-pct').textContent = neu + '%';
+  }
+  if (rows[2]) {
+    rows[2].querySelector('.prog-fill').style.width = neg + '%';
+    rows[2].querySelector('.s-pct').textContent = neg + '%';
+  }
+
+  // Update legend text
+  const legItems = document.querySelectorAll('.leg .leg-item');
+  if (legItems[0]) legItems[0].innerHTML = `<span class="leg-dot" style="background:#00D084"></span>Positive ${pos}%`;
+  if (legItems[1]) legItems[1].innerHTML = `<span class="leg-dot" style="background:#FFB648"></span>Neutral ${neu}%`;
+  if (legItems[2]) legItems[2].innerHTML = `<span class="leg-dot" style="background:#FF4D6D"></span>Negative ${neg}%`;
+
+  // Sentiment by platform chart
+  if (sentChart) sentChart.destroy();
+  sentChart = new Chart(document.getElementById('sentChart'), {
+    type: 'bar',
+    data: {
+      labels: ['Positive', 'Neutral', 'Negative'],
+      datasets: [{
+        data: [pos, neu, neg],
+        backgroundColor: ['#00D084','#FFB648','#FF4D6D'],
+        borderRadius: 4
+      }]
+    },
+    options: {
+      responsive: true,
+      maintainAspectRatio: false,
+      plugins: { legend: { display: false } },
+      scales: {
+        x: { ticks: { color: '#7d8590', font:{size:10} }, grid: { display: false } },
+        y: { ticks: { color: '#7d8590', font:{size:10} }, grid: { color: 'rgba(255,255,255,.05)' } }
+      }
+    }
+  });
+}
+
+// ── Top Posts Table ──────────────────────────────────────────────
+async function loadTopPosts() {
+  const d = await API.getViralPosts('7d', 6);
+  const tbody = document.getElementById('topPostsTbody');
+  if (!tbody || !d?.data?.length) return;
+
+  tbody.innerHTML = d.data.map(p => `
+    <tr>
+      <td>${pltBadge(p.platform)}</td>
+      <td class="post-preview">${(p.text||'').slice(0,80)}…</td>
+      <td>${typBadge(p.post_type || 'text')}</td>
+      <td>${fmtNum(p.metrics?.likes    || 0)}</td>
+      <td>${fmtNum(p.metrics?.replies  || 0)}</td>
+      <td>${fmtNum(p.metrics?.retweets || 0)}</td>
+      <td>${fmtNum(p.metrics?.views    || 0)}</td>
+    </tr>
+  `).join('');
+}
+
+boot();
+</script>
+</body>
+</html>

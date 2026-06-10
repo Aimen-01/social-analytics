@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Posts — SocialMetrics Pro</title>
+  <link rel="stylesheet" href="styles.css" />
+  <style>
+    .post-count-badge {
+      display: inline-flex; align-items: center; justify-content: center;
+      background: rgba(108,99,255,0.15);
+      color: var(--accent);
+      font-size: 0.72rem; font-weight: 700;
+      min-width: 22px; height: 22px;
+      border-radius: 99px; padding: 0 7px;
+      margin-left: 8px;
+    }
+    .actions-col { white-space: nowrap; }
+    .actions-col button + button { margin-left: 6px; }
+    .del-row { opacity: 0.4; pointer-events: none; text-decoration: line-through; }
+  </style>
+</head>
+<body>
+
+<div class="overlay" id="overlay"></div>
+
+<!-- ═══ SIDEBAR ═══════════════════════════════════════════════════ -->
+<aside class="sidebar" id="sidebar">
+  <div class="sidebar-brand">
+    <div class="brand-icon">
+      <svg viewBox="0 0 24 24"><path d="M3 3h7v7H3V3zm0 11h7v7H3v-7zm11-11h7v7h-7V3zm0 11h7v7h-7v-7z"/></svg>
+    </div>
+    <div class="brand-name">Social<span>Metrics</span></div>
+  </div>
+  <nav class="nav-wrap">
+    <div class="nav-label">Main</div>
+    <a href="dashboard.html" class="nav-link">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>
+      Dashboard
+    </a>
+    <a href="posts.html" class="nav-link active">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
+      Posts
+    </a>
+    <a href="search.html" class="nav-link">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+      Search
+    </a>
+    <a href="reports.html" class="nav-link">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>
+      Reports
+    </a>
+  </nav>
+
+</aside>
+
+<!-- ═══ NAVBAR ════════════════════════════════════════════════════ -->
+<header class="navbar">
+  <div class="nav-l">
+    <button class="hamburger" id="hamburger" aria-label="Toggle sidebar">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+    </button>
+    <span class="page-title">
+      Manage Posts
+      <span class="post-count-badge" id="postCountBadge">25</span>
+    </span>
+  </div>
+  <div class="nav-r">
+    <span class="date-chip">Mon, May 12 2026</span>
+  </div>
+</header>
+
+<!-- ═══ MAIN ══════════════════════════════════════════════════════ -->
+<main class="main">
+  <div class="pg-hd anim">
+    <h1>Posts</h1>
+    <p>Create, edit, and manage all your social media posts in one place</p>
+  </div>
+
+  <!-- Toolbar -->
+  <div class="toolbar anim-1">
+    <div class="toolbar-l">
+      <div class="search-wrap">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+        <input type="search" class="search-inp" id="postSearch" placeholder="Search posts…" />
+      </div>
+
+      <select id="filterPlatform">
+        <option value="">All Platforms</option>
+        <option>Facebook</option>
+        <option>Instagram</option>
+        <option>Twitter</option>
+        <option>YouTube</option>
+      </select>
+
+      <select id="filterType">
+        <option value="">All Types</option>
+        <option>Image</option>
+        <option>Video</option>
+        <option>Text</option>
+        <option>Reel</option>
+      </select>
+    </div>
+
+    <button class="btn btn-primary" id="addPostBtn">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+      Add New Post
+    </button>
+  </div>
+
+  <div class="result-count" id="resultCount"></div>
+
+  <div class="card anim-2" style="padding:0;overflow:hidden;">
+    <div class="tbl-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Date</th>
+            <th>Platform</th>
+            <th>Content</th>
+            <th>Type</th>
+            <th style="text-align:right">Likes</th>
+            <th style="text-align:right">Comments</th>
+            <th style="text-align:right">Shares</th>
+            <th style="text-align:right">Reach</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody id="postsTbody"></tbody>
+      </table>
+    </div>
+  </div>
+</main>
+
+<!-- ═══ ADD / EDIT MODAL ══════════════════════════════════════════ -->
+<div class="modal-wrap" id="modalWrap">
+  <div class="modal">
+    <div class="modal-hd">
+      <span class="modal-ttl" id="modalTitle">Add New Post</span>
+      <button class="modal-close" id="modalClose">×</button>
+    </div>
+
+    <form id="postForm" autocomplete="off">
+      <div class="form-grid">
+        <div class="form-grp">
+          <label for="fPlatform">Platform</label>
+          <select id="fPlatform" required>
+            <option value="">Select platform…</option>
+            <option>Facebook</option>
+            <option>Instagram</option>
+            <option>Twitter</option>
+            <option>YouTube</option>
+          </select>
+        </div>
+
+        <div class="form-grp">
+          <label for="fType">Post Type</label>
+          <select id="fType" required>
+            <option value="">Select type…</option>
+            <option>Image</option>
+            <option>Video</option>
+            <option>Text</option>
+            <option>Reel</option>
+          </select>
+        </div>
+
+        <div class="form-grp form-full">
+          <label for="fContent">Content</label>
+          <textarea id="fContent" placeholder="Write your post content here…" required></textarea>
+        </div>
+
+        <div class="form-grp">
+          <label for="fDate">Date</label>
+          <input type="date" id="fDate" required />
+        </div>
+
+        <div class="form-grp">
+          <label for="fHashtags">Hashtags (comma-separated)</label>
+          <input type="text" id="fHashtags" placeholder="travel, adventure, nature" />
+        </div>
+
+        <div class="form-grp">
+          <label for="fLikes">Likes</label>
+          <input type="number" id="fLikes" placeholder="0" min="0" />
+        </div>
+
+        <div class="form-grp">
+          <label for="fComments">Comments</label>
+          <input type="number" id="fComments" placeholder="0" min="0" />
+        </div>
+
+        <div class="form-grp">
+          <label for="fShares">Shares</label>
+          <input type="number" id="fShares" placeholder="0" min="0" />
+        </div>
+
+        <div class="form-grp">
+          <label for="fReach">Reach</label>
+          <input type="number" id="fReach" placeholder="0" min="0" />
+        </div>
+      </div>
+
+      <div class="modal-foot">
+        <button type="button" class="btn btn-ghost" id="cancelBtn">Cancel</button>
+        <button type="submit" class="btn btn-primary" id="saveBtn">Save Post</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<!-- ═══ DELETE CONFIRM MODAL ══════════════════════════════════════ -->
+<div class="modal-wrap" id="delModalWrap">
+  <div class="modal" style="max-width:400px;">
+    <div class="modal-hd">
+      <span class="modal-ttl">Delete Post</span>
+      <button class="modal-close" id="delModalClose">×</button>
+    </div>
+    <p style="color:var(--muted);font-size:0.875rem;margin-bottom:8px;">Are you sure you want to delete this post? This action cannot be undone.</p>
+    <p id="delPostPreview" style="font-size:0.82rem;color:var(--text);background:var(--bg);border:1px solid var(--border);border-radius:8px;padding:10px 12px;margin-bottom:4px;"></p>
+    <div class="modal-foot">
+      <button type="button" class="btn btn-ghost" id="delCancelBtn">Cancel</button>
+      <button type="button" class="btn btn-danger" id="confirmDelBtn">Delete Post</button>
+    </div>
+  </div>
+</div>
+
+<script src="../api.js"></script>
+<script>
+initSidebar();
+
+let posts  = [];
+let editId = null;
+let deleteId = null;
+
+async function loadPosts() {
+  const platform = document.getElementById('filterPlatform').value;
+  const url = platform
+    ? `http://127.0.0.1:5000/api/posts/?platform=${platform}&limit=100`
+    : `http://127.0.0.1:5000/api/posts/?limit=100`;
+  const res = await fetch(url);
+  const d   = await res.json();
+  posts = d.data || [];
+  renderTable();
+}
+
+function filtered() {
+  const q  = document.getElementById('postSearch').value.toLowerCase().trim();
+  const ty = document.getElementById('filterType').value.toLowerCase();
+  return posts.filter(p =>
+    (!q  || (p.text||'').toLowerCase().includes(q) ||
+             (p.platform||'').toLowerCase().includes(q) ||
+             (p.hashtags||[]).join(' ').toLowerCase().includes(q)) &&
+    (!ty || (p.post_type||'').toLowerCase() === ty)
+  );
+}
+
+function renderTable() {
+  const data  = filtered();
+  const tbody = document.getElementById('postsTbody');
+  document.getElementById('resultCount').innerHTML =
+    `Showing <strong>${data.length}</strong> of <strong>${posts.length}</strong> posts`;
+  document.getElementById('postCountBadge').textContent = posts.length;
+
+  if (!data.length) {
+    tbody.innerHTML = `<tr><td colspan="9">
+      <div class="empty">
+        <h3>No posts found</h3>
+        <p>Try adjusting your filters</p>
+      </div></td></tr>`;
+    return;
+  }
+
+  tbody.innerHTML = data.map(p => {
+    const m    = p.metrics || {};
+    const date = p.created_at ? p.created_at.slice(0,10) : '—';
+    return `<tr>
+      <td style="white-space:nowrap;color:var(--muted);font-size:0.8rem">${date}</td>
+      <td>${pltBadge(p.platform)}</td>
+      <td><div class="cell-content" title="${(p.text||'').replace(/"/g,'')}">${(p.text||'').slice(0,80)}</div></td>
+      <td>${typBadge(p.post_type||'text')}</td>
+      <td style="text-align:right"><strong>${(m.likes||0).toLocaleString()}</strong></td>
+      <td style="text-align:right">${(m.replies||0).toLocaleString()}</td>
+      <td style="text-align:right">${(m.retweets||0).toLocaleString()}</td>
+      <td style="text-align:right">${fmtNum(m.views||0)}</td>
+      <td class="actions-col">
+        <button class="btn btn-edit btn-sm" onclick="openEdit('${p._id}')">Edit</button>
+        <button class="btn btn-danger btn-sm" onclick="openDelete('${p._id}', \`${(p.text||'').slice(0,60).replace(/`/g,"'")}\`)">Delete</button>
+      </td>
+    </tr>`;
+  }).join('');
+}
+
+// ── Filters ──────────────────────────────────────────────────────
+document.getElementById('postSearch').addEventListener('input', renderTable);
+document.getElementById('filterType').addEventListener('input', renderTable);
+document.getElementById('filterPlatform').addEventListener('change', loadPosts);
+
+// ── Add Post Modal ────────────────────────────────────────────────
+const modalWrap = document.getElementById('modalWrap');
+const form      = document.getElementById('postForm');
+
+function openModal(title) {
+  document.getElementById('modalTitle').textContent = title;
+  modalWrap.classList.add('open');
+}
+function closeModal() {
+  modalWrap.classList.remove('open');
+  form.reset();
+  editId = null;
+}
+
+document.getElementById('addPostBtn').addEventListener('click', () => {
+  editId = null;
+  document.getElementById('fDate').value = new Date().toISOString().slice(0,10);
+  openModal('Add New Post');
+  document.getElementById('saveBtn').textContent = 'Add Post';
+});
+document.getElementById('modalClose').addEventListener('click', closeModal);
+document.getElementById('cancelBtn').addEventListener('click', closeModal);
+modalWrap.addEventListener('click', e => { if (e.target === modalWrap) closeModal(); });
+
+// ── Edit ─────────────────────────────────────────────────────────
+function openEdit(id) {
+  const p = posts.find(x => x._id === id);
+  if (!p) return;
+  editId = id;
+  const m = p.metrics || {};
+  document.getElementById('fPlatform').value = p.platform || '';
+  document.getElementById('fType').value     = p.post_type || '';
+  document.getElementById('fContent').value  = p.text || '';
+  document.getElementById('fDate').value     = (p.created_at||'').slice(0,10);
+  document.getElementById('fHashtags').value = (p.hashtags||[]).join(', ');
+  document.getElementById('fLikes').value    = m.likes    || 0;
+  document.getElementById('fComments').value = m.replies  || 0;
+  document.getElementById('fShares').value   = m.retweets || 0;
+  document.getElementById('fReach').value    = m.views    || 0;
+  openModal('Edit Post');
+  document.getElementById('saveBtn').textContent = 'Save Changes';
+}
+
+// ── Save ─────────────────────────────────────────────────────────
+form.addEventListener('submit', async e => {
+  e.preventDefault();
+  const token = localStorage.getItem('sm_token');
+  if (!token) {
+    alert('You need to be logged in as admin to add posts.');
+    return;
+  }
+  const body = {
+    text:      document.getElementById('fContent').value.trim(),
+    username:  localStorage.getItem('sm_user') || 'admin',
+    platform:  document.getElementById('fPlatform').value,
+    post_type: document.getElementById('fType').value,
+  };
+  await fetch('http://127.0.0.1:5000/api/posts/', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json',
+               'Authorization': `Bearer ${token}` },
+    body: JSON.stringify(body)
+  });
+  closeModal();
+  loadPosts();
+});
+
+// ── Delete ───────────────────────────────────────────────────────
+const delWrap = document.getElementById('delModalWrap');
+
+function openDelete(id, preview) {
+  deleteId = id;
+  document.getElementById('delPostPreview').textContent = preview;
+  delWrap.classList.add('open');
+}
+function closeDelModal() {
+  delWrap.classList.remove('open');
+  deleteId = null;
+}
+document.getElementById('delModalClose').addEventListener('click', closeDelModal);
+document.getElementById('delCancelBtn').addEventListener('click', closeDelModal);
+delWrap.addEventListener('click', e => { if (e.target === delWrap) closeDelModal(); });
+
+document.getElementById('confirmDelBtn').addEventListener('click', async () => {
+  const token = localStorage.getItem('sm_token');
+  if (!token) { alert('Admin login required.'); return; }
+  await fetch(`http://127.0.0.1:5000/api/posts/${deleteId}`, {
+    method: 'DELETE',
+    headers: { 'Authorization': `Bearer ${token}` }
+  });
+  closeDelModal();
+  loadPosts();
+});
+
+loadPosts();
+</script>
+</body>
+</html>
